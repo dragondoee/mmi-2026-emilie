@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2678155290748665258}
-  - component: {fileID: 8970993696980312514}
   - component: {fileID: 3743394250818888798}
   m_Layer: 0
   m_Name: Door
@@ -34,20 +33,6 @@ Transform:
   - {fileID: 5294180755957668780}
   m_Father: {fileID: 2418507375709712623}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8970993696980312514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5445463212930751354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca37f5bb01f516d4dad10bf280e611fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorController
-  m_Animator: {fileID: 3743394250818888798}
-  m_ItemController: {fileID: 0}
 --- !u!95 &3743394250818888798
 Animator:
   serializedVersion: 7
@@ -212,10 +197,6 @@ PrefabInstance:
       propertyPath: m_Event.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8614260082968352223, guid: 504a5e3e09789af48917f9d6558f4ddd, type: 3}
-      propertyPath: m_Event.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 8970993696980312514}
     - target: {fileID: 8614260082968352223, guid: 504a5e3e09789af48917f9d6558f4ddd, type: 3}
       propertyPath: m_Event.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2

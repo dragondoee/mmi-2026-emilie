@@ -626,6 +626,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -4
       objectReference: {fileID: 0}
+    - target: {fileID: 5075977329058918812, guid: 29c89230d9c15c448b7da6d0df546a9c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 5075977329058918812, guid: 29c89230d9c15c448b7da6d0df546a9c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4
+      objectReference: {fileID: 0}
     - target: {fileID: 7292933507069664638, guid: 29c89230d9c15c448b7da6d0df546a9c, type: 3}
       propertyPath: m_Name
       value: Player_ThirdPersonController_Armature
@@ -1128,6 +1136,14 @@ PrefabInstance:
     - target: {fileID: 3272902105927774652, guid: 9ed96ae1f0e663f45bf97de7901ae939, type: 3}
       propertyPath: m_Name
       value: Trigger_Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 8504662173574300181, guid: 9ed96ae1f0e663f45bf97de7901ae939, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970993696980312514, guid: 9ed96ae1f0e663f45bf97de7901ae939, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
