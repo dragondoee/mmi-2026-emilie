@@ -5,7 +5,7 @@ public class ProximityMessageController : MonoBehaviour
 {
     private static readonly string PLAYER_TAG = "Player";
     
-    [SerializeField] private string m_MessageToPlayer;
+    [SerializeField] [TextArea] private string m_MessageToPlayer;
 
     private TriggerController m_TriggerController;
 
