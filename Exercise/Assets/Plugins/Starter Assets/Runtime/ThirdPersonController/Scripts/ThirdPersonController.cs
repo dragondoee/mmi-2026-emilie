@@ -40,6 +40,13 @@ namespace StarterAssets
         public float Gravity = -15.0f;
 
         [Space(10)]
+        [Tooltip("Climb speed of the character in m/s")]
+        public float ClimbSpeed = 2.0f;
+        public Transform ladderForward;
+        public bool canClimb = false;
+        public bool isClimbing = false;
+
+        [Space(10)]
         [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
         public float JumpTimeout = 0.50f;
 
@@ -156,9 +163,10 @@ namespace StarterAssets
         {
             _hasAnimator = TryGetComponent(out _animator);
 
-            JumpAndGravity();
             GroundedCheck();
             Move();
+            StartClimbing();
+            JumpAndGravity();
         }
 
         private void LateUpdate()
@@ -213,6 +221,13 @@ namespace StarterAssets
 
         private void Move()
         {
+
+            if (isClimbing)
+            {
+                Climb();
+                return;
+            }
+
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -279,9 +294,52 @@ namespace StarterAssets
             }
         }
 
+        private void StartClimbing()
+        {
+            if (!canClimb)
+            {
+                isClimbing = false;
+                return;
+            }
+
+            // On grimpe uniquement si input vertical
+            if (Mathf.Abs(_input.move.y) > 0.1f)
+            {
+                isClimbing = true;
+            }
+        }
+
+        void Climb()
+        {
+            _verticalVelocity = 0f;
+
+            // orientation du personnage face à l'échelle
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                Quaternion.LookRotation(ladderForward.forward),
+                Time.deltaTime * 10f
+            );
+
+            Vector3 climbDirection = new Vector3(0.0f, _input.move.y, 0.0f).normalized;
+            _controller.Move(climbDirection * (ClimbSpeed * Time.deltaTime));
+
+            if (Grounded && _input.move.y < 0)
+            {
+                StopClimbing();
+            }
+        }
+
+        void StopClimbing()
+        {
+            isClimbing = false;
+            canClimb = false;
+            _verticalVelocity = -2f;
+        }
+
+
         private void JumpAndGravity()
         {
-            if (Grounded)
+            if (Grounded && !isClimbing)
             {
                 // reset the fall timeout timer
                 _fallTimeoutDelta = FallTimeout;
@@ -342,7 +400,7 @@ namespace StarterAssets
             }
 
             // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-            if (_verticalVelocity < _terminalVelocity)
+            if (!isClimbing && _verticalVelocity < _terminalVelocity)
             {
                 _verticalVelocity += Gravity * Time.deltaTime;
             }

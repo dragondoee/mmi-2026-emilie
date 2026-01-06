@@ -112,8 +112,16 @@ PrefabInstance:
       value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6760689349432183165, guid: 43a444c67cde7ec46bda31d8aacc894f, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760689349432183165, guid: 43a444c67cde7ec46bda31d8aacc894f, type: 3}
       propertyPath: m_Size.z
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760689349432183165, guid: 43a444c67cde7ec46bda31d8aacc894f, type: 3}
+      propertyPath: m_Center.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6760689349432183165, guid: 43a444c67cde7ec46bda31d8aacc894f, type: 3}
       propertyPath: m_Center.z
@@ -174,14 +182,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8115208806509555957, guid: 43a444c67cde7ec46bda31d8aacc894f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3560685419356036723}
+      addedObject: {fileID: 1657128169521254481}
   m_SourcePrefab: {fileID: 100100000, guid: 43a444c67cde7ec46bda31d8aacc894f, type: 3}
 --- !u!1 &1617418752969304972 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8115208806509555957, guid: 43a444c67cde7ec46bda31d8aacc894f, type: 3}
   m_PrefabInstance: {fileID: 7416648622396529529}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3560685419356036723
+--- !u!114 &1657128169521254481
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,7 +198,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1617418752969304972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d911ce347cb453646bef2877e75fbe67, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ba698b3cb5e529449eb3e7faa0dc038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LadderController
 --- !u!4 &1912294203613735647 stripped
