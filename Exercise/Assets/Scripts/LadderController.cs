@@ -28,8 +28,8 @@ public class LadderController : MonoBehaviour
 
             if (controller != null)
             {
-                controller.isClimbing = false;
                 controller.canClimb = false;
+                controller.StopClimbing();
             }
         }
     }

@@ -812,6 +812,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -4
       objectReference: {fileID: 0}
+    - target: {fileID: 6536475777914980443, guid: 29c89230d9c15c448b7da6d0df546a9c, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7292933507069664638, guid: 29c89230d9c15c448b7da6d0df546a9c, type: 3}
       propertyPath: m_Name
       value: Player_ThirdPersonController_Armature

@@ -104,6 +104,8 @@ namespace StarterAssets
         private int _animIDJump;
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
+        private int _animIDClimbing;
+        private int _animIDClimbingSpeed;
 
 #if ENABLE_INPUT_SYSTEM
         private PlayerInput _playerInput;
@@ -181,6 +183,8 @@ namespace StarterAssets
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+            _animIDClimbing = Animator.StringToHash("Climbing");
+            _animIDClimbingSpeed = Animator.StringToHash("ClimbingSpeed");
         }
 
         private void GroundedCheck()
@@ -222,8 +226,13 @@ namespace StarterAssets
         private void Move()
         {
 
-            if (isClimbing)
+            if (isClimbing && canClimb)
             {
+                if (_hasAnimator)
+                {
+                    _animator.SetBool(_animIDClimbing, isClimbing);
+                    _animator.SetFloat(_animIDClimbingSpeed, _input.move.y);
+                }
                 Climb();
                 return;
             }
@@ -297,16 +306,14 @@ namespace StarterAssets
         private void StartClimbing()
         {
             if (!canClimb)
-            {
-                isClimbing = false;
                 return;
-            }
 
-            // On grimpe uniquement si input vertical
-            if (Mathf.Abs(_input.move.y) > 0.1f)
-            {
-                isClimbing = true;
-            }
+            // uniquement si input
+            if (Mathf.Abs(_input.move.y) < 0.1f)
+                return;
+           
+            isClimbing = true;
+            
         }
 
         void Climb()
@@ -314,26 +321,42 @@ namespace StarterAssets
             _verticalVelocity = 0f;
 
             // orientation du personnage face à l'échelle
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                Quaternion.LookRotation(ladderForward.forward),
-                Time.deltaTime * 10f
-            );
+            if (isClimbing)
+            {
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    Quaternion.LookRotation(ladderForward.forward),
+                    Time.deltaTime * 10f
+                );
+            }
 
+            // arrêt de l'escalade si on atteint le sol
+            if (Grounded && _input.move.y <= 0f)
+            {
+                Debug.Log("Stop Climbing : Descend sur le sol");
+                canClimb = false;
+                StopClimbing();
+                return;
+            }
+
+            // déplacement vertical le long de l'échelle
             Vector3 climbDirection = new Vector3(0.0f, _input.move.y, 0.0f).normalized;
             _controller.Move(climbDirection * (ClimbSpeed * Time.deltaTime));
 
-            if (Grounded && _input.move.y < 0)
-            {
-                StopClimbing();
-            }
         }
 
-        void StopClimbing()
+        public void StopClimbing()
         {
             isClimbing = false;
-            canClimb = false;
-            _verticalVelocity = -2f;
+            if (!Grounded)
+                _verticalVelocity = -2f;
+
+
+            if (_hasAnimator)
+            {
+                _animator.SetBool(_animIDClimbing, false);
+                _animator.SetFloat(_animIDClimbingSpeed, 0f);
+            }
         }
 
 
