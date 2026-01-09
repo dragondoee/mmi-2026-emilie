@@ -147,7 +147,7 @@ namespace StarterAssets
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
@@ -312,19 +312,19 @@ namespace StarterAssets
             if (!canClimb)
                 return;
 
-            // uniquement si input
+            // only if input
             if (Mathf.Abs(_input.move.y) < 0.1f)
                 return;
-           
+
             isClimbing = true;
-            
+
         }
 
         void Climb()
         {
             _verticalVelocity = 0f;
 
-            // orientation du personnage face à l'échelle
+            // character's orientation facing the ladder
             if (isClimbing)
             {
                 transform.rotation = Quaternion.Slerp(
@@ -336,7 +336,7 @@ namespace StarterAssets
 
             _animator.ResetTrigger(_animIDClimbingTop);
 
-            if(transform.position.y >= ladderTopExitPoint.position.y && _input.move.y >= 0f)
+            if (transform.position.y >= ladderTopExitPoint.position.y && _input.move.y >= 0f)
             {
                 _animator.SetTrigger(_animIDClimbingTop);
                 _controller.Move(ladderForward.forward * (MoveSpeed * Time.deltaTime));
@@ -349,7 +349,7 @@ namespace StarterAssets
                 return;
             }
 
-            // déplacement vertical le long de l'échelle
+            // vertical movement
             Vector3 climbDirection = new Vector3(0.0f, _input.move.y, 0.0f).normalized;
             _controller.Move(climbDirection * (ClimbSpeed * Time.deltaTime));
 
