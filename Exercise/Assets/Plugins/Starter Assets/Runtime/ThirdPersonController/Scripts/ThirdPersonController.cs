@@ -43,6 +43,8 @@ namespace StarterAssets
         [Tooltip("Climb speed of the character in m/s")]
         public float ClimbSpeed = 2.0f;
         public Transform ladderForward;
+        public Transform ladderTopExitPoint;
+
         public bool canClimb = false;
         public bool isClimbing = false;
 
@@ -105,6 +107,7 @@ namespace StarterAssets
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
         private int _animIDClimbing;
+        private int _animIDClimbingTop;
         private int _animIDClimbingSpeed;
 
 #if ENABLE_INPUT_SYSTEM
@@ -184,6 +187,7 @@ namespace StarterAssets
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
             _animIDClimbing = Animator.StringToHash("Climbing");
+            _animIDClimbingTop = Animator.StringToHash("ClimbingTop");
             _animIDClimbingSpeed = Animator.StringToHash("ClimbingSpeed");
         }
 
@@ -330,10 +334,16 @@ namespace StarterAssets
                 );
             }
 
-            // arrêt de l'escalade si on atteint le sol
+            _animator.ResetTrigger(_animIDClimbingTop);
+
+            if(transform.position.y >= ladderTopExitPoint.position.y && _input.move.y >= 0f)
+            {
+                _animator.SetTrigger(_animIDClimbingTop);
+                _controller.Move(ladderForward.forward * (MoveSpeed * Time.deltaTime));
+            }
+
             if (Grounded && _input.move.y <= 0f)
             {
-                Debug.Log("Stop Climbing : Descend sur le sol");
                 canClimb = false;
                 StopClimbing();
                 return;
@@ -348,17 +358,16 @@ namespace StarterAssets
         public void StopClimbing()
         {
             isClimbing = false;
+
+            if (!_hasAnimator)
+                return;
+
             if (!Grounded)
                 _verticalVelocity = -2f;
 
-
-            if (_hasAnimator)
-            {
-                _animator.SetBool(_animIDClimbing, false);
-                _animator.SetFloat(_animIDClimbingSpeed, 0f);
-            }
+            _animator.SetBool(_animIDClimbing, false);
+            _animator.SetFloat(_animIDClimbingSpeed, 0f);
         }
-
 
         private void JumpAndGravity()
         {

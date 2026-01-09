@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class LadderController : MonoBehaviour
 {
+    public Transform topExitPoint;
     private ThirdPersonController controller;
 
     private void OnTriggerEnter(Collider other)
@@ -14,13 +15,13 @@ public class LadderController : MonoBehaviour
             if (controller != null)
             {
                 controller.ladderForward = transform;
+                controller.ladderTopExitPoint = topExitPoint;
                 controller.canClimb = true;
             }
         }
     }
 
-
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
